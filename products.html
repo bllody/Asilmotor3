@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ürünler Sitesi</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f4f4;}
+  header { padding:5px; text-align:center; background:#000000; color:white;}
+  .filter-container { display:flex; justify-content:center; gap:10px; margin:20px 0; }
+  .filter-container select, .filter-container input { padding:10px; border-radius:10px; border:1px solid #ccc; }
+  .product-container { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; padding:0 20px 50px 20px;}
+  .product-card {background:white;padding:15px; border-radius:15px; width:200px; text-align:center; box-shadow:0 0 5px rgba(0,0,0,0.2);
+  /* Ekle */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 320px; /* tüm kartlar eşit olsun diye sabit yükseklik */
+}
+  .product-card img { width:100%; border-radius:10px; }
+  .product-card h3 { margin:10px 0; }
+  .product-card button { padding:12px; border:none; border-radius:15px; background:#ff4d4d; color:white; cursor:pointer; margin-top:5px; width:95%; font-weight:bold; font-size:16px;}
+  .product-card button:hover { background:#e60000; }
+
+  /* Modal */
+  .modal { display:none; position:fixed; z-index:10; left:0; top:0; width:100%; height:100%; overflow:auto; background:rgba(0,0,0,0.6);}
+  .modal-content { background:white; margin:10% auto; padding:20px; border-radius:15px; width:90%; max-width:400px; text-align:center; position:relative; }
+  .close { position:absolute; top:10px; right:15px; font-size:25px; cursor:pointer; }
+  .modal-content button, .modal-content a button { margin:5px 0; width:100%; padding:12px; border-radius:15px; border:none; background:#ff4d4d; color:white; cursor:pointer; font-weight:bold; font-size:16px;}
+  .modal-content button:hover, .modal-content a button:hover { background:#e60000; }
+
+  /* Mail kutusu */
+  .mail-box { position:fixed; right:20px; bottom:20px; background:#ff4d4d; color:white; padding:12px; border-radius:50px; cursor:pointer; z-index:20; font-size:20px;}
+  .mail-form { display:none; position:fixed; right:20px; bottom:80px; background:white; padding:20px; border-radius:15px; box-shadow:0 0 10px rgba(0,0,0,0.3); z-index:20; width:300px;}
+  .mail-form input, .mail-form textarea { width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ccc; }
+  .mail-form button { background:#ff4d4d; color:white; padding:12px; border:none; border-radius:15px; cursor:pointer; font-weight:bold; width:100%; font-size:16px; }
+  .mail-form button:hover { background:#e60000; }
+    #contact-form {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background: #fff;
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 9999;
+  }
+
+  #contact-form h3 {
+    margin-top: 0;
+    color: #ff0000;
+  }
+
+  #contact-form input, 
+  #contact-form textarea, 
+  #contact-form button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+  #contact-form button {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  #contact-form button:hover {
+    background-color: #e70707;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏍️Asil Motor</h1>
+</header>
+
+<div class="filter-container">
+  <select id="categoryFilter">
+    <option value="all">Tüm Kategoriler</option>
+    <option value="kask">Kask</option>
+    <option value="motosiklet">Motosiklet</option>
+  </select>
+  <input type="text" id="searchInput" placeholder="Ürün Ara...">
+</div>
+
+<div class="product-container">
+  <div class="product-card" data-name="Benice" data-category="kask">
+    <img src="images/benice.jpg" alt="">
+    <h3>Benice</h3>
+    <button class="details-btn" data-product="Benice" data-price="1000 TL" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.138543,329m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNC4wIKXMDSoASAFQAw%3D%3D">Detaylar</button>
+  </div>
+  <div class="product-card" data-name="CG50" data-category="motosiklet">
+    <img src="images/cg50.jpg" alt="">
+    <h3>CG50</h3>
+    <button class="details-btn" data-product="CG50" data-price="1200 TL" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.138543,329m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNC4wIKXMDSoASAFQAw%3D%3D">Detaylar</button>
+  </div>
+  <div class="product-card" data-name="CG50 Plus" data-category="motosiklet">
+    <img src="images/cg50plus.jpg" alt="">
+    <h3>CG50 Plus</h3>
+    <button class="details-btn" data-product="CG50 Plus" data-price="1500 TL" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.138543,329m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNC4wIKXMDSoASAFQAw%3D%3D">Detaylar</button>
+  </div>
+  <div class="product-card" data-name="Speeedy" data-category="kask">
+    <img src="images/speeedy.jpg" alt="">
+    <h3>Speeedy</h3>
+    <button class="details-btn" data-product="Speeedy" data-price="900 TL" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.138543,329m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNC4wIKXMDSoASAFQAw%3D%3D">Detaylar</button>
+  </div>
+  <div class="product-card" data-name="Yelken Gri" data-category="kask">
+    <img src="images/yelkengri.jpg" alt="">
+    <h3>Yelken Gri</h3>
+    <button class="details-btn" data-product="Yelken Gri" data-price="950 TL" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.138543,329m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNC4wIKXMDSoASAFQAw%3D%3D">Detaylar</button>
+  </div>
+  <div class="product-card" data-name="Yelken Kırmızı" data-category="kask">
+    <img src="images/yelkenkırmızı.jpg" alt="">
+    <h3>Yelken Kırmızı</h3>
+    <button class="details-btn" data-product="Yelken Kırmızı" data-price="980 TL" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.138543,329m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNC4wIKXMDSoASAFQAw%3D%3D">Detaylar</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="detailsModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 id="modalName">Ürün İsmi</h2>
+    <p id="modalPrice">Fiyat: 0 TL</p>
+    <p id="modalAddress">Adres: Örnek Sokak No:1</p>
+    <p id="modalPhone">Telefon:90 530 599 88 91</p>
+    <button id="showLocation">Konumu Gör</button>
+    <a id="whatsappLink" href="#" target="_blank"><button>WhatsApp ile Sor</button></a>
+  </div>
+</div>
+
+<!-- Mail kutusu -->
+<div class="mail-box" id="mailBox">📧</div>
+<div class="mail-form" id="mailForm">
+  <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+  <h3>Bizimle İletişime Geç</h3>
+  <input type="hidden" name="access_key" value="0fd46e25-0957-4854-b727-d7539d09c62f">
+  
+  <input type="text" name="name" placeholder="Adınız" required>
+  <input type="email" name="email" placeholder="E-posta" required>
+  <textarea name="message" placeholder="Mesajınız" rows="4" required></textarea>
+  
+  <button type="submit">Gönder</button>
+</form>
+</div>
+
+<script>
+  // Filtre ve arama
+  const categoryFilter = document.getElementById('categoryFilter');
+  const searchInput = document.getElementById('searchInput');
+  const productCards = document.querySelectorAll('.product-card');
+
+  categoryFilter.addEventListener('change', filterProducts);
+  searchInput.addEventListener('input', filterProducts);
+
+  function filterProducts() {
+    const category = categoryFilter.value.toLowerCase();
+    const search = searchInput.value.toLowerCase();
+    productCards.forEach(card => {
+      const name = card.dataset.name.toLowerCase();
+      const cardCategory = card.dataset.category.toLowerCase();
+      if ((category === 'all' || category === cardCategory) && name.includes(search)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Modal
+  const modal = document.getElementById('detailsModal');
+  const modalName = document.getElementById('modalName');
+  const modalPrice = document.getElementById('modalPrice');
+  const modalAddress = document.getElementById('modalAddress');
+  const modalPhone = document.getElementById('modalPhone');
+  const showLocationBtn = document.getElementById('showLocation');
+  const whatsappLink = document.getElementById('whatsappLink');
+
+  document.querySelectorAll('.details-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      modalName.textContent = btn.dataset.product;
+      modalPrice.textContent = `Fiyat: ${btn.dataset.price}`;
+      modalAddress.textContent = `Adres: ${btn.dataset.address}`;
+      modalPhone.textContent = `Telefon: ${btn.dataset.phone}`;
+      showLocationBtn.onclick = () => window.open(btn.dataset.location, "_blank");
+      whatsappLink.href = `https://wa.me/905305998891?text=Merhaba, ${btn.dataset.product} hakkında bilgi almak istiyorum.`;
+      modal.style.display = 'block';
+    });
+  });
+
+  document.querySelector('.close').addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
+
+  // Mail kutusu
+  const mailBox = document.getElementById('mailBox');
+  const mailForm = document.getElementById('mailForm');
+  let mailOpen = false;
+  mailBox.addEventListener('click', () => {
+    mailOpen = !mailOpen;
+    mailForm.style.display = mailOpen ? 'block' : 'none';
+  });
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: formData,
+    });
+    
+    if (response.ok) {
+      alert('Mesajınız başarıyla gönderildi!');
+      form.reset();
+    } else {
+      alert('Bir hata oluştu, tekrar deneyin.');
+    }
+  });
+</script>
+
+</body>
+</html>

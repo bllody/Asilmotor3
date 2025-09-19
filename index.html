@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asil Motor</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+body{background:#fff;color:#222;line-height:1.6;}
+header {position: fixed;top: 0; left: 0; width: 100%;  display: flex;  justify-content: space-between;  align-items: center;  padding: 1rem 3rem;  z-index: 1000;  background: transparent;  transition: 0.4s;}
+header.scrolled {background: rgba(0, 0, 0, 0.819);}
+.logo{font-size:1.8rem;font-weight:bold;color:#fff;}
+nav ul{list-style:none;display:flex;gap:2rem;}
+nav a{color:#fff;text-decoration:none;font-weight:500;transition:0.3s;}
+nav a:hover{color:#e50914;}
+.hero{position:relative;height:100vh;overflow:hidden;}
+.hero video{width:100%;height:100%;object-fit:cover;}
+.hero .overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;padding:2rem;}
+.hero h1{font-size:3rem;margin-bottom:1rem;}
+.btn{background:#e50914;color:#fff;padding:0.8rem 1.5rem;text-decoration:none;border-radius:10px;transition:0.3s;margin-top:1rem;display:inline-block;font-weight:bold;}
+.btn:hover{background:#b00610;}
+.products{padding:5rem 2rem;max-width:1200px;margin:auto;}
+.products h2{text-align:center;margin-bottom:2rem;font-size:2rem;color:#111;}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;}
+.product-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,0.1);transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;}
+.product-card:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+.product-card img{width:100%;height:200px;object-fit:cover;}
+.product-card h3{padding:1rem;font-size:1.2rem;}
+.product-card p{padding:0 1rem 1rem;font-weight:bold;color:#e50914;}
+.gallery{padding:5rem 2rem;max-width:1200px;margin:auto;position:relative;overflow:hidden;}
+.gallery h2{text-align:center;margin-bottom:2rem;font-size:2rem;color:#111;}
+.gallery-slider{display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;}
+.gallery-slider img{width:275px;height:250px;object-fit:cover;border-radius:10px;flex-shrink:0;cursor:pointer;}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#e50914;background:rgba(255,255,255,0.7);border-radius:50%;width:50px;height:50px;display:flex;justify-content:center;align-items:center;cursor:pointer;user-select:none;z-index:1000;}
+.arrow:hover{background:#e50914;color:#fff;}
+.gallery .prev{left:10px;}
+.gallery .next{right:10px;}
+.modal, .modal-img{display:none;position:fixed;z-index:2000;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);backdrop-filter:blur(5px);justify-content:center;align-items:center;}
+.modal-content{background:#fff;padding:2rem;border-radius:15px;max-width:420px;text-align:center;position:relative;box-shadow:0 8px 25px rgba(0,0,0,0.2);}
+.modal-content h2{margin-bottom:1rem;font-size:1.8rem;color:#e50914;}
+.modal-content p{margin:0.5rem 0;}
+.modal-content a{display:block;margin:0.5rem auto;padding:0.8rem;background:#e50914;color:#fff;text-decoration:none;border-radius:10px;transition:0.3s;width:80%;}
+.modal-content a:hover{background:#b00610;}
+.modal-img-content{max-width:40%;max-height:40%;display:flex;justify-content:center;align-items:center;position:relative;}
+.modal-img-content img{width:100%;height:auto;object-fit:contain;border-radius:10px;}
+.modal-img .arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:50px;color:#fff;background:rgba(0,0,0,0.5);border-radius:50%;width:60px;height:60px;display:flex;justify-content:center;align-items:center;cursor:pointer;user-select:none;}
+.modal-img .prev{left:-70px;}
+.modal-img .next{right:-70px;}
+.close{position:absolute;top:10px;right:15px;font-size:2rem;cursor:pointer;color:#fff;z-index:3000;}
+footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem;}
+@media(max-width:768px){
+.gallery-slider img{width:200px;height:150px;}
+.modal-img-content{max-width:90%;max-height:70%;}
+.modal-img .arrow{width:40px;height:40px;font-size:30px;left:-50px;right:-50px;}
+}
+</style>
+</head>
+<body>
+
+<header id="navbar">
+  <div class="logo">🏍️ Asil Motor</div>
+  <nav>
+    <ul>
+      <li><a href="#">Anasayfa</a></li>
+      <li><a href="#products">Ürünler</a></li>  
+      <li><a href="https://www.instagram.com/asil.motor35/" target="_blank" style="display:inline-block; margin-left:10px;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
+  </svg>
+</a></li>
+      <li><!-- Google Maps Logo (tıklanabilir) -->
+<a href="https://www.google.com/maps/place/Asil+Motor/@38.390372,27.1408999,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="display:inline-block; margin-left:10px;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10c0 5-9 12-9 12s-9-7-9-12a9 9 0 1118 0z"></path>
+    <circle cx="12" cy="10" r="3"></circle>
+  </svg>
+</a>
+</li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <video autoplay muted loop>
+    <source src="images/sa.mp4" type="video/mp4">
+  </video>
+  <div class="overlay">
+    <h1>Motor Tutkunlarına Özel</h1>
+    <p>Kaliteli ekipmanlar, modern tasarımlar, uygun fiyat.</p>
+    <a href="#products" class="btn">Ürünleri Keşfet</a>
+  </div>
+</section>
+
+<section class="products" id="products">
+  <h2>Ürünlerimiz</h2>
+  <div class="product-grid">
+    <div class="product-card" data-name="Full Face Kask" data-price="₺1.200" data-address="Adres: Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.3903642,27.1274239,2629m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
+      <img src="images/foto7.jpg" alt="Kask">
+      <h3>Motosiklet Kaskı Beyaz</h3>
+      <p>₺1.200</p>
+    </div>
+    <div class="product-card" data-name="Koruyucu Mont" data-price="₺1.800" data-address="Adres: Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.3903642,27.1274239,2629m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
+      <img src="images/foto5.jpg" alt="Mont">
+      <h3>Motosiklet Kaskı Mavit</h3>
+      <p>₺1.800</p>
+    </div>
+    <div class="product-card" data-name="Motosiklet Eldiveni" data-price="₺600" data-address="Adres: Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.3903642,27.1274239,2629m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
+      <img src="images/foto6.jpg" alt="Eldiven">
+      <h3>Motosiklet Kaskı kırmızı</h3>
+      <p>₺600</p>
+    </div>
+  </div>
+</section>
+
+<div style="display:flex; justify-content:center; margin-top:2rem;">
+  <a href="products.html" class="btn">Daha Fazla</a>
+</div>
+
+<section class="gallery" id="gallery">
+  <h2>Dükkanımız'dan Fotoğraflar</h2>
+  <div class="gallery-slider">
+    <img src="images/foto1.jpg" alt="Foto 1">
+    <img src="images/foto2.jpg" alt="Foto 2">
+    <img src="images/foto3.jpg" alt="Foto 3">
+    <img src="images/foto4.jpg" alt="Foto 4">
+    <img src="images/foto5.jpg" alt="Foto 4">
+    <img src="images/foto6.jpg" alt="Foto 4">
+    <img src="images/foto7.jpg" alt="Foto 4">
+  </div>
+  <div class="arrow prev">&#10094;</div>
+  <div class="arrow next">&#10095;</div>
+</section>
+
+<!-- Ürün Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close" id="close">&times;</span>
+    <h2 id="modal-name"></h2>
+    <p id="modal-price"></p>
+    <p id="modal-address"></p>
+    <a href="#" target="_blank" id="modal-whatsapp">💬 WhatsApp ile Sor</a>
+    <a href="#" target="_blank" id="modal-map">📍 Konumu Gör</a>
+  </div>
+</div>
+
+<!-- Foto Modal -->
+<div class="modal-img" id="imgModal">
+  <div class="modal-img-content">
+    <span class="close" id="closeImg">&times;</span>
+    <span class="arrow prev">&#10094;</span>
+    <img id="modal-img-display" src="" alt="Büyütülmüş Foto">
+    <span class="arrow next">&#10095;</span>
+  </div>
+</div>
+
+<script>
+// Navbar scroll
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{if(window.scrollY>50)navbar.classList.add('scrolled');else navbar.classList.remove('scrolled');});
+
+// Ürün modal
+const modal=document.getElementById('modal');
+const close=document.getElementById('close');
+const modalName=document.getElementById('modal-name');
+const modalPrice=document.getElementById('modal-price');
+const modalAddress=document.getElementById('modal-address');
+const modalMap=document.getElementById('modal-map');
+const modalWhatsapp=document.getElementById('modal-whatsapp');
+
+document.querySelectorAll('.product-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    modal.style.display='flex';
+    modalName.innerText=card.dataset.name;
+    modalPrice.innerText=card.dataset.price;
+    modalAddress.innerText=card.dataset.address;
+    modalMap.href=card.dataset.mapLink;
+    modalWhatsapp.href=`https://wa.me/${card.dataset.whatsapp}?text=${encodeURIComponent(card.dataset.name+' hakkında bilgi almak istiyorum.')}`;
+  });
+});
+close.addEventListener('click',()=>modal.style.display='none');
+window.addEventListener('click',e=>{if(e.target==modal)modal.style.display='none';});
+
+// Gallery slider
+const gallerySlider=document.querySelector('.gallery-slider');
+const prevBtn=document.querySelector('.gallery .prev');
+const nextBtn=document.querySelector('.gallery .next');
+nextBtn.addEventListener('click',()=>{gallerySlider.scrollBy({left:310,behavior:'smooth'});});
+prevBtn.addEventListener('click',()=>{gallerySlider.scrollBy({left:-310,behavior:'smooth'});});
+
+// Foto modal
+const imgModal=document.getElementById('imgModal');
+const closeImg=document.getElementById('closeImg');
+const modalImgDisplay=document.getElementById('modal-img-display');
+const modalPrev=imgModal.querySelector('.prev');
+const modalNext=imgModal.querySelector('.next');
+const galleryImages=Array.from(document.querySelectorAll('.gallery-slider img'));
+let currentIndex=0;
+
+galleryImages.forEach((img,index)=>{
+  img.addEventListener('click',()=>{
+    currentIndex=index;
+    imgModal.style.display='flex';
+    modalImgDisplay.src=img.src;
+  });
+});
+modalPrev.addEventListener('click',()=>{
+  currentIndex=(currentIndex-1+galleryImages.length)%galleryImages.length;
+  modalImgDisplay.src=galleryImages[currentIndex].src;
+});
+modalNext.addEventListener('click',()=>{
+  currentIndex=(currentIndex+1)%galleryImages.length;
+  modalImgDisplay.src=galleryImages[currentIndex].src;
+});
+closeImg.addEventListener('click',()=>imgModal.style.display='none');
+window.addEventListener('click',e=>{if(e.target==imgModal)imgModal.style.display='none';});
+</script>
+</body>
+</html>
