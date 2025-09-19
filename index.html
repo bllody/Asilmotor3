@@ -13,6 +13,7 @@ header.scrolled{background:rgba(0,0,0,0.819);}
 nav ul{list-style:none;display:flex;gap:1rem;}
 nav a{color:#fff;text-decoration:none;font-weight:500;transition:0.3s;}
 nav a:hover{color:#e50914;}
+.menu-toggle{display:none;cursor:pointer;font-size:1.8rem;color:#fff;}
 .hero{position:relative;height:100vh;overflow:hidden;}
 .hero video{width:100%;height:100%;object-fit:cover;}
 .hero .overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;padding:2rem;}
@@ -44,15 +45,24 @@ nav a:hover{color:#e50914;}
 .modal-img-content{width:90%;max-width:800px;max-height:90%;display:flex;justify-content:center;align-items:center;position:relative;}
 .modal-img-content img{width:100%;height:auto;max-height:80vh;object-fit:contain;border-radius:15px;}
 .close{position:absolute;top:10px;right:15px;font-size:2rem;cursor:pointer;color:#fff;z-index:3000;}
+footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem;}
+/* Mail Form */
 .mail-box{position:fixed;bottom:20px;right:20px;z-index:3000;}
 .mail-toggle{background:#e50914;color:#fff;padding:0.8rem 1.2rem;border:none;border-radius:50px;cursor:pointer;font-size:1rem;font-weight:bold;}
 .mail-form{display:none;background:#fff;padding:1.5rem;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.2);width:300px;margin-top:0.5rem;}
+.mail-form.active{display:block;}
 .mail-form h3{margin-bottom:1rem;color:#e50914;}
 .mail-form input,.mail-form textarea{width:100%;padding:0.7rem;margin:0.5rem 0;border:1px solid #ccc;border-radius:10px;}
 .mail-form button{width:100%;padding:0.8rem;background:#e50914;border:none;border-radius:10px;color:#fff;font-weight:bold;cursor:pointer;}
 .mail-form button:hover{background:#b00610;}
-footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem;}
-@media (max-width:768px){.prev,.next{font-size:20px;padding:8px;}.gallery-slider img{width:200px;height:150px;}}
+/* Mobil destek */
+@media (max-width:768px){
+  nav ul{flex-direction:column;background:rgba(0,0,0,0.95);position:absolute;top:60px;right:0;width:200px;display:none;padding:1rem;border-radius:0 0 10px 10px;}
+  nav ul.active{display:flex;}
+  .menu-toggle{display:block;}
+  .gallery-slider img{width:200px;height:150px;}
+  .prev,.next{font-size:20px;padding:8px;}
+}
 </style>
 </head>
 <body>
@@ -60,11 +70,12 @@ footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem
 <header id="navbar">
   <div class="logo">🏍️ Asil Motor</div>
   <nav>
-    <ul>
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <ul id="navMenu">
       <li><a href="#">Anasayfa</a></li>
       <li><a href="#products">Ürünler</a></li>
       <li><a href="https://www.instagram.com/asil.motor35/" target="_blank">Instagram</a></li>
-      <li><a href="https://www.google.com/maps/place/Asil+Motor/@38.4032008,27.1463394,4421m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3Dr" target="_blank">Konum</a></li>
+      <li><a href="https://www.google.com/maps/place/Asil+Motor/@38.3903552,27.1382821,657m/data=!3m2!1e3!4b1!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank">Konum</a></li>
     </ul>
   </nav>
 </header>
@@ -83,17 +94,17 @@ footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem
 <section class="products" id="products">
   <h2>Ürünlerimiz</h2>
   <div class="product-grid">
-    <div class="product-card" data-name="Full Face Kask" data-price="₺1.200" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.4032008,27.1463394,4421m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
+    <div class="product-card" data-name="Full Face Kask" data-price="₺1.200" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.3903552,27.1382821,657m/data=!3m2!1e3!4b1!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
       <img src="images/foto7.jpg" alt="Kask">
       <h3>Motosiklet Kaskı Siyah-Beyaz</h3>
       <p>₺1.200</p>
     </div>
-    <div class="product-card" data-name="Koruyucu Mont" data-price="₺1.800" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.4032008,27.1463394,4421m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
+    <div class="product-card" data-name="Koruyucu Mont" data-price="₺1.800" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.3903552,27.1382821,657m/data=!3m2!1e3!4b1!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
       <img src="images/foto5.jpg" alt="Mont">
-      <h3>Motosiklet Kask Koyu-Beyaz </h3>
+      <h3>Motosiklet Kask Koyu-Beyaz</h3>
       <p>₺1.800</p>
     </div>
-    <div class="product-card" data-name="Motosiklet Eldiveni" data-price="₺600" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.4032008,27.1463394,4421m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
+    <div class="product-card" data-name="Motosiklet Eldiveni" data-price="₺600" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.3903552,27.1382821,657m/data=!3m2!1e3!4b1!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
       <img src="images/foto6.jpg" alt="Eldiven">
       <h3>Motosiklet Kask Kırmızı</h3>
       <p>₺600</p>
@@ -104,7 +115,6 @@ footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem
 <div style="display:flex; justify-content:center; margin-top:2rem;">
   <a href="products.html" class="btn">Daha Fazla</a>
 </div>
-
 
 <section class="gallery" id="gallery">
   <h2>Dükkanımız'dan Fotoğraflar</h2>
@@ -143,10 +153,32 @@ footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem
   </div>
 </div>
 
+<!-- Mail Form -->
+<div class="mail-box">
+  <button class="mail-toggle" onclick="toggleForm()">📧 Mail Gönder</button>
+  <form class="mail-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+    <h3>Bize Ulaşın</h3>
+    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY">
+    <input type="text" name="name" placeholder="Adınız" required>
+    <input type="email" name="email" placeholder="E-Posta" required>
+    <textarea name="message" placeholder="Mesajınız" required></textarea>
+    <button type="submit">Gönder</button>
+  </form>
+</div>
+
+<footer>
+  <p>© 2025 Asil Motor. Tüm Hakları Saklıdır.</p>
+</footer>
+
 <script>
 // Navbar scroll
 const navbar=document.getElementById('navbar');
 window.addEventListener('scroll',()=>{if(window.scrollY>50)navbar.classList.add('scrolled');else navbar.classList.remove('scrolled');});
+
+// Mobil Menü toggle
+const menuToggle = document.getElementById("menuToggle");
+const navMenu = document.getElementById("navMenu");
+menuToggle.addEventListener("click", () => {navMenu.classList.toggle("active");});
 
 // Ürün modal
 const modal=document.getElementById('modal');
@@ -203,6 +235,26 @@ modalNext.addEventListener('click',()=>{
 });
 closeImg.addEventListener('click',()=>imgModal.style.display='none');
 window.addEventListener('click',e=>{if(e.target==imgModal)imgModal.style.display='none';});
+
+// Mail form aç/kapat
+function toggleForm(){
+  document.querySelector(".mail-form").classList.toggle("active");
+}
+
+// Web3Forms gönderim sonrası
+const form=document.getElementById("contactForm");
+form.addEventListener("submit",async function(e){
+  e.preventDefault();
+  const data=new FormData(form);
+  const res=await fetch(form.action,{method:"POST",body:data});
+  if(res.ok){
+    alert("Mesajınız başarıyla gönderildi ✅");
+    form.reset();
+    form.classList.remove("active");
+  }else{
+    alert("Bir hata oluştu ❌ Lütfen tekrar deneyin.");
+  }
+});
 </script>
 
 </body>
