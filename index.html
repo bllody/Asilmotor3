@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr">  
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +7,120 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 body{background:#fff;color:#222;line-height:1.6;}
-header{position:fixed;top:0;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;z-index:1000;background:transparent;transition:0.4s;}
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1rem 2rem;
+  z-index:1000;
+  background:transparent;
+  transition:0.4s;
+
+  /* Animasyon için başlangıç */
+  transform: translateY(-80px);
+  opacity: 0;
+  animation: navbarSlide 1s ease-out forwards;
+
+  
+}
 header.scrolled{background:rgba(0,0,0,0.819);}
+@keyframes navbarSlide {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 .logo{font-size:1.8rem;font-weight:bold;color:#fff;}
 nav ul{list-style:none;display:flex;gap:1rem;}
-nav a{color:#fff;text-decoration:none;font-weight:500;transition:0.3s;}
-nav a:hover{color:#e50914;}
+nav a{
+  position: relative;
+  color:#fff;
+  text-decoration:none;
+  font-weight:500;
+  transition: color 0.3s, transform 0.3s;
+  display:inline-block;
+}
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: #e50914;
+  transition: width 0.3s;
+}
+nav a:hover{
+  color:#e50914;
+  transform: scale(1.2);
+}
+nav a:hover::after {
+  width: 100%;
+}
 .menu-toggle{display:none;cursor:pointer;font-size:1.8rem;color:#fff;}
 .hero{position:relative;height:100vh;overflow:hidden;}
 .hero video{width:100%;height:100%;object-fit:cover;}
-.hero .overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;padding:2rem;}
-.hero h1{font-size:3rem;margin-bottom:1rem;}
+.hero .overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0, 0, 0, 0.55);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;padding:2rem;animation:fadeIn 1.5s;}
+header h1 {color:#fff;}
+header p {color:#ddd;}
+.animate-title{opacity:0;transform:translateX(-50px);animation:slideIn 1s ease-out forwards;}
+.animate-sub{opacity:0;transform:translateY(30px);animation:fadeUp 1.5s ease-out forwards;animation-delay:0.3s;}
+@keyframes slideIn {to {opacity:1;transform:translateX(0);}}
+@keyframes fadeUp {to {opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.hero h1{
+  font-size:3rem;
+  margin-bottom:1rem;
+  opacity:0;
+  transform: translateY(-40px);
+  animation: fadeDown 1s ease-out forwards;
+}
+.hero p{
+  opacity:0;
+  transform: translateY(40px);
+  animation: fadeUpHero 1.2s ease-out forwards;
+  animation-delay: 0.5s;
+}
+.hero .btn{
+  opacity:0;
+  transform: scale(0.8);
+  animation: popUp 0.8s ease-out forwards;
+  animation-delay: 1s;
+}
+@keyframes fadeDown {
+  to {
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeUpHero {
+  to {
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+@keyframes popUp {
+  to {
+    opacity:1;
+    transform: scale(1);
+  }
+}
 .btn{background:#e50914;color:#fff;padding:0.8rem 1.5rem;text-decoration:none;border-radius:10px;transition:0.3s;margin-top:1rem;display:inline-block;font-weight:bold;}
 .btn:hover{background:#b00610;}
 .products{padding:5rem 2rem;max-width:1200px;margin:auto;}
 .products h2{text-align:center;margin-bottom:2rem;font-size:2rem;color:#111;}
 .product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;}
-.product-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,0.1);transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;}
+.product-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,0.1);transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;position:relative;}
 .product-card:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
 .product-card img{width:100%;height:200px;object-fit:cover;border-radius:12px;}
 .product-card h3{padding:1rem;font-size:1.2rem;}
 .product-card p{padding:0 1rem 1rem;font-weight:bold;color:#e50914;}
+.product-card .quick-info{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.6);color:#fff;padding:5px 10px;border-radius:5px;font-size:0.9rem;display:none;}
+.product-card:hover .quick-info{display:block;}
 .gallery{padding:5rem 2rem;max-width:1200px;margin:auto;position:relative;overflow:hidden;}
 .gallery h2{text-align:center;margin-bottom:2rem;font-size:2rem;color:#111;}
 .gallery-slider{display:flex;transition:0.5s;gap:10px;touch-action: pan-y;overflow-x:auto;scroll-behavior:smooth;}
@@ -42,10 +135,9 @@ nav a:hover{color:#e50914;}
 .modal-content p{margin:0.5rem 0;}
 .modal-content a{display:block;margin:0.5rem auto;padding:0.8rem;background:#e50914;color:#fff;text-decoration:none;border-radius:10px;transition:0.3s;width:80%;}
 .modal-content a:hover{background:#b00610;}
-.modal-img-content{width:90%;max-width:800px;max-height:90%;display:flex;justify-content:center;align-items:center;position:relative;}
 .modal-img-content img{width:100%;height:auto;max-height:80vh;object-fit:contain;border-radius:15px;}
 .close{position:absolute;top:10px;right:15px;font-size:2rem;cursor:pointer;color:#fff;z-index:3000;}
-footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem;}
+footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;}
 /* Mail Form */
 .mail-box{position:fixed;bottom:20px;right:20px;z-index:3000;}
 .mail-toggle{background:#e50914;color:#fff;padding:0.8rem 1.2rem;border:none;border-radius:50px;cursor:pointer;font-size:1rem;font-weight:bold;}
@@ -63,19 +155,21 @@ footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem
   .gallery-slider img{width:200px;height:150px;}
   .prev,.next{font-size:20px;padding:8px;}
 }
+
+
 </style>
 </head>
 <body>
 
 <header id="navbar">
-  <div class="logo">🏍️ Asil Motor</div>
+  <h1 class="animate-title">🏍️ Asil Motor</h1>
   <nav>
     <div class="menu-toggle" id="menuToggle">☰</div>
     <ul id="navMenu">
       <li><a href="#">Anasayfa</a></li>
       <li><a href="#products">Ürünler</a></li>
-      <li><a href="https://www.instagram.com/asil.motor35/" target="_blank">Instagram</a></li>
-      <li><a href="https://www.google.com/maps/place/Asil+Motor/@38.3903552,27.1382821,657m/data=!3m2!1e3!4b1!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank">Konum</a></li>
+      <li><a href="https://www.instagram.com/asil.motor35/" target="_blank">İnstagram</a></li>
+      <li><a href="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D" target="_blank">Konum</a></li>
     </ul>
   </nav>
 </header>
@@ -94,20 +188,26 @@ footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem
 <section class="products" id="products">
   <h2>Ürünlerimiz</h2>
   <div class="product-grid">
-    <div class="product-card" data-name="Full Face Kask" data-price="₺1.200" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.3903552,27.1382821,657m/data=!3m2!1e3!4b1!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
+    <!-- Ürün 1 -->
+    <div class="product-card" data-name="Full Face Kask Siyah-Beyaz" data-price="₺1.200" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
       <img src="images/foto7.jpg" alt="Kask">
-      <h3>Motosiklet Kaskı Siyah-Beyaz</h3>
+      <h3>Full Face Kask Siyah-Beyaz</h3>
       <p>₺1.200</p>
+      <div class="quick-info">Hafif, Güvenli, Şık</div>
     </div>
-    <div class="product-card" data-name="Koruyucu Mont" data-price="₺1.800" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.3903552,27.1382821,657m/data=!3m2!1e3!4b1!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
+    <!-- Ürün 2 -->
+    <div class="product-card" data-name="Koruyucu Mont Yeşil" data-price="₺1.800" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
       <img src="images/foto5.jpg" alt="Mont">
-      <h3>Motosiklet Kask koyu-Yeşil</h3>
+      <h3>Koruyucu Mont Yeşil</h3>
       <p>₺1.800</p>
+      <div class="quick-info">Rüzgar Geçirmez, Dayanıklı</div>
     </div>
-    <div class="product-card" data-name="Motosiklet Eldiveni" data-price="₺600" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.3903552,27.1382821,657m/data=!3m2!1e3!4b1!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">
+    <!-- Ürün 3 -->
+    <div class="product-card" data-name="Motosiklet Eldiveni" data-price="₺600" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-whatsapp="905305998891" data-map-link="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
       <img src="images/foto6.jpg" alt="Eldiven">
-      <h3>Motosiklet Kask Kırmızı</h3>
+      <h3>Motosiklet Eldiveni</h3>
       <p>₺600</p>
+      <div class="quick-info">Esnek, Rahat, Güvenli</div>
     </div>
   </div>
 </section>
@@ -117,11 +217,12 @@ footer{background:#111;color:#bbb;text-align:center;padding:2rem;margin-top:3rem
 </div>
 
 <section class="gallery" id="gallery">
-  <h2>Dükkanımız'dan Fotoğraflar</h2>
+  <h2>Dükkanımızdan Fotoğraflar</h2>
   <div class="gallery-slider">
     <img src="images/foto1.jpg" alt="Foto 1">
     <img src="images/foto2.jpg" alt="Foto 2">
-    <img src="images/foto3.jpg" alt="Foto 3">
+    <img src="images/foto
+3.jpg" alt="Foto 3">
     <img src="images/foto4.jpg" alt="Foto 4">
     <img src="images/foto5.jpg" alt="Foto 5">
     <img src="images/foto6.jpg" alt="Foto 6">
