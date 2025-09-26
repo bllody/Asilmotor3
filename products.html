@@ -3,426 +3,643 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ürünler Sitesi</title>
+<title>Asil Motor - Ürünler</title>
 <style>
+/* Ana Sayfa (index.html) Stilleriyle Tamamen Uyumlu CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif; 
+}
+
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f4f4f4;
+    background: #f4f4f4; 
+    color: #222;
+    line-height: 1.6;
 }
 
+/* HEADER - Anasaypa Stiliyle Uyumlu Basit Navigasyon */
 header {
-  padding: 5px;
-  text-align: center;
-  background: #000;
-  color: white;
+    background: #000;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+header nav a {
+    color: #e50914; /* Ana Sayfa Kırmızı Rengi */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #fff;
+}
+
+/* FİLTRE VE ARAMA */
 .filter-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 3rem auto 2rem auto; 
+    max-width: 90%;
+    padding: 0 20px;
 }
 
 .filter-container select,
 .filter-container input {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px; 
+    border: 1px solid #ccc;
+    flex-grow: 1;
+    max-width: 300px;
+    font-size: 1rem;
 }
 
+/* ÜRÜN GRİDİ */
 .product-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 0 20px 50px 20px;
+    display: grid;
+    /* Masaüstünde min 280px genişliğinde kartlar yan yana sıralanır */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 25px; 
+    padding: 0 20px 50px 20px;
+    max-width: 1200px;
+    margin: auto;
 }
 
+/* ÜRÜN KARTLARI */
 .product-card {
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  height: 340px; /* tüm kartlar eşit */
+    background: white;
+    border-radius: 10px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    flex-direction: column;
+    height: 400px; 
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer; 
+    overflow: hidden; 
+    position: relative;
 }
 
 .product-card:hover {
-  transform: scale(1.05);
-  transition: 0.5s;
-  box-shadow:0 5px 15px;
+    transform: scale(1.03); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .product-card img {
-  width: 100%;
-  max-height: 220px; /* resim yüksekliğini sınırla */
-  border-radius: 10px;
-  flex-shrink: 0;
-  object-fit: cover; /* orantılı kırpma */
+    width: 100%;
+    height: 270px; 
+    border-radius: 10px 10px 0 0; 
+    object-fit: contain; 
+    /* DEĞİŞİKLİK BURADA: Resmin boş kalan kısımlarının arka plan rengi */
+    background-color: #f0f0f0; /* Daha açık ve yumuşak gri */
 }
 
-
-.product-card h3 {
-  margin: 10px 0;
-  flex-grow: 1; /* başlık boşluğu doldursun */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+/* Başlık, Fiyat ve Bilgiyi tutan beyaz zemin alanı */
+.product-details {
+    padding: 15px;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.product-card button {
-  padding: 12px;
-  border: none;
-  border-radius: 15px;
-  background: #ff4d4d;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 16px;
-  margin-top: auto; /* buton hep altta */
+.product-details h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #222;
+    font-weight: 600;
 }
 
-.product-card button:hover {
-  background: #e60000;
+/* Fiyat ve Bilgi Satırı */
+.price-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
 }
 
-/* Modal */
+.price-info-container .price {
+    font-size: 1.4rem;
+    color: #e50914; /* Kırmızı renk */
+    font-weight: bold;
+}
+
+.price-info-container .info-tag {
+    background: #777; 
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px; 
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* MODAL STİLLERİ (Tutarlı) */
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 10;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background: rgba(0, 0, 0, 0.6);
+    display: none;
+    position: fixed;
+    z-index: 2000; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px); 
+    justify-content: center;
+    align-items: center;
 }
-
 .modal-content {
-  background: white;
-  margin: 10% auto;
-  padding: 20px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  position: relative;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 90%; 
+    width: 420px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
-
+.modal-content h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: #e50914;
+}
 .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 25px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem; 
+    cursor: pointer;
+    color: #333; 
 }
-
 .modal-content button,
 .modal-content a button {
-  margin: 5px 0;
-  width: 100%;
-  padding: 12px;
-  border-radius: 15px;
-  border: none;
-  background: #ff4d4d;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 16px;
+    margin: 8px 0;
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: none;
+    background: #e50914;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
 }
-
 .modal-content button:hover,
 .modal-content a button:hover {
-  background: #e60000;
+    background: #b00610;
 }
 
-/* Mail kutusu */
+/* MAİL KUTUSU STİLLERİ */
 .mail-box {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  background: #ff4d4d;
-  color: white;
-  padding: 12px;
-  border-radius: 50px;
-  cursor: pointer;
-  z-index: 20;
-  font-size: 20px;
+    position: fixed;
+    bottom: 20px; 
+    right: 20px;
+    z-index: 3000;
+    display: flex; 
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Form açma/kapama butonu */
+.mail-toggle {
+    background: #e50914;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 50px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    z-index: 3001; 
+    transition: all 0.3s ease-out; 
+    text-align: left;
+    width: 180px; 
+}
+
+
+.mail-form.active + .mail-toggle {
+    border-radius: 10px 10px 0 0; 
+    width: 300px;
 }
 
 .mail-form {
-  display: none;
-  position: fixed;
-  right: 20px;
-  bottom: 80px;
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  z-index: 20;
-  width: 300px;
+    background: white; 
+    padding: 0; 
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+    width: 300px;
+    
+    position: absolute; 
+    bottom: 0;
+    right: 0;
+    
+    transform: translateY(100%); 
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); 
+    
+    margin-bottom: 50px; 
+}
+.mail-form.active {
+    transform: translateY(0); 
+    opacity: 1;
+    visibility: visible;
+}
+
+.mail-form-inner {
+    padding: 1.5rem;
+    padding-top: 0.5rem; 
+}
+
+.mail-form h3 {
+    margin-bottom: 1rem;
+    color: #e50914;
+    font-size: 1.5rem;
+    position: relative; 
+}
+
+/* KAPATMA DÜĞMESİ */
+.mail-close {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    font-size: 1.8rem; 
+    cursor: pointer;
+    color: #333;
+    font-weight: normal;
+    display: block; 
 }
 
 .mail-form input,
 .mail-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+    width: 100%;
+    padding: 0.7rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+.mail-form button[type="submit"] {
+    margin: 1rem 0 0.5rem 0;
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: none;
+    background: #e50914; 
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+.mail-form button[type="submit"]:hover {
+    background: #b00610;
 }
 
-.mail-form button {
-  background: #ff4d4d;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-weight: bold;
-  width: 100%;
-  font-size: 16px;
+
+/* FOOTER STİLİ (ANASAYFA İLE AYNI) */
+footer {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 1.5rem 0;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 30px; 
+}
+footer p {
+    margin: 0;
 }
 
-.mail-form button:hover {
-  background: #e60000;
-}
 
-.mail-close {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #333;
-}
+/* MOBİL UYUMLULUK AYARLARI (768px altı) */
+@media (max-width: 768px) {
+    /* Başlık ve Navigasyon */
+    header {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    header nav {
+        margin-top: 10px;
+    }
 
-.mail-close:hover {
-  color: red;
-}
+    /* Filtre ve Arama - Alt alta sıralanır */
+    .filter-container {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2rem;
+    }
+    .filter-container select,
+    .filter-container input {
+        max-width: 100%;
+        width: 100%;
+    }
 
-#contact-form {
-  width: 100%;
-}
+    /* Ürün Kartları - Tek sütuna düşer */
+    .product-container {
+        grid-template-columns: 1fr; /* Tek sütun */
+        gap: 15px; /* Boşluk azaltıldı */
+        padding: 0 15px 50px 15px; /* Yan boşluk azaltıldı */
+    }
 
-#contact-form h3 {
-  margin-top: 0;
-  color: #ff0000;
+    /* ÜRÜN KARTLARI YÜKSEKLİĞİ MOBİL İÇİN DÜZELTİLDİ */
+    .product-card {
+        height: auto; /* Yüksekliği içeriğe göre ayarla */
+    }
+    .product-card img {
+        height: 250px; /* Mobil için uygun bir resim yüksekliği */
+    }
+    
+    /* MAİL KUTUSU (En altta ortalanmış) */
+    .mail-box {
+        bottom: 10px;
+        right: 10px;
+        left: 10px; /* Mobil ortalama için sola da 10px boşluk */
+        align-items: center;
+    }
+    
+    .mail-toggle, .mail-form {
+        width: 100%; 
+        max-width: 300px;
+        right: auto;
+        bottom: auto; 
+    }
+    
+    .mail-form {
+        position: absolute;
+        transform: translateY(calc(100% + 10px));
+        margin-bottom: 0;
+    }
+    .mail-form.active {
+        transform: translateY(calc(-100% - 10px));
+    }
+    
+    .mail-form.active + .mail-toggle {
+        width: 100%;
+        max-width: 300px;
+    }
 }
-
-#contact-form input,
-#contact-form textarea,
-#contact-form button {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-#contact-form button {
-  background-color: #ff0000;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-#contact-form button:hover {
-  background-color: #e70707;
-}
-
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🏍️Asil Motor</h1>
+    <h1>🏍️ Asil Motor</h1>
+    <nav>
+        <a href="index.html">← Anasayfa🏍️</a>
+    </nav>
 </header>
 
 <div class="filter-container">
-  <select id="categoryFilter">
-    <option value="all">Tüm Kategoriler</option>
-    <option value="motosiklet">Motosiklet</option>
-    <option value="aksesuar">Aksesuar</option>
-    <option value="yedek">Yedek Parça</option>
-  </select>
-  <input type="text" id="searchInput" placeholder="Ürün Ara...">
+    <select id="categoryFilter">
+        <option value="all">Tüm Kategoriler</option>
+        <option value="motosiklet">Motosiklet</option>
+        <option value="aksesuar">Aksesuar</option>
+        <option value="yedek">Yedek Parça</option>
+    </select>
+    <input type="text" id="searchInput" placeholder="Ürün Ara...">
 </div>
 
 <div class="product-container">
-  <div class="product-card" data-name="Benice" data-category="motosiklet">
-    <img src="images/benice.jpg" alt="">
-    <h3>Benice</h3>
-    <button class="details-btn" data-product="Benice" data-price="1000 TL" data-address="Akıncılar, İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor">Detaylar</button>
-  </div>
+    <div class="product-card" data-product="Benice" data-name="Benice" data-category="motosiklet" data-price="1000 TL" data-info="Stokta Var" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
+        <img src="images/benice.jpg" alt="Benice Motosiklet">
+        <div class="product-details">
+            <h3>Benice 150</h3>
+            <div class="price-info-container">
+                <span class="price">₺1.000</span>
+                <span class="info-tag">Stokta Var</span>
+            </div>
+        </div>
+    </div>
 
-  <div class="product-card" data-name="CG50" data-category="motosiklet">
-    <img src="images/cg50.jpg" alt="">
-    <h3>CG50</h3>
-    <button class="details-btn" data-product="CG50" data-price="1200 TL" data-address="Akıncılar, İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor">Detaylar</button>
-  </div>
+    <div class="product-card" data-product="CG50" data-name="CG50" data-category="motosiklet" data-price="1200 TL" data-info="50cc Motor" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
+        <img src="images/cg50.jpg" alt="CG50 Motosiklet">
+        <div class="product-details">
+            <h3>CG50</h3>
+            <div class="price-info-container">
+                <span class="price">₺1.200</span>
+                <span class="info-tag">50cc Motor</span>
+            </div>
+        </div>
+    </div>
 
-  <div class="product-card" data-name="CG50 Plus" data-category="motosiklet">
-    <img src="images/cg50plus.jpg" alt="">
-    <h3>CG50 Plus</h3>
-    <button class="details-btn" data-product="CG50 Plus" data-price="1500 TL" data-address="Akıncılar, İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor">Detaylar</button>
-  </div>
+    <div class="product-card" data-product="CG50 Plus" data-name="CG50 Plus" data-category="motosiklet" data-price="1500 TL" data-info="Plus Model" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
+        <img src="images/cg50plus.jpg" alt="CG50 Plus Motosiklet">
+        <div class="product-details">
+            <h3>CG50 Plus</h3>
+            <div class="price-info-container">
+                <span class="price">₺1.500</span>
+                <span class="info-tag">Plus Model</span>
+            </div>
+        </div>
+    </div>
 
-  <div class="product-card" data-name="Speeedy" data-category="motosiklet">
-    <img src="images/speeedy.jpg" alt="">
-    <h3>Speeedy</h3>
-    <button class="details-btn" data-product="Speeedy" data-price="900 TL" data-address="Akıncılar, İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor">Detaylar</button>
-  </div>
+    <div class="product-card" data-product="Speeedy" data-name="Speeedy" data-category="motosiklet" data-price="900 TL" data-info="Yeni Seri" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
+        <img src="images/speeedy.jpg" alt="Speeedy Motosiklet">
+        <div class="product-details">
+            <h3>Speeedy</h3>
+            <div class="price-info-container">
+                <span class="price">₺900</span>
+                <span class="info-tag">Yeni Seri</span>
+            </div>
+        </div>
+    </div>
 
-  <div class="product-card" data-name="Yelken Gri" data-category="motosiklet">
-    <img src="images/yelkengri.jpg" alt="">
-    <h3>Yelken Gri</h3>
-    <button class="details-btn" data-product="Yelken Gri" data-price="950 TL" data-address="Akıncılar, İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor">Detaylar</button>
-  </div>
+    <div class="product-card" data-product="Yelken Gri" data-name="Yelken Gri" data-category="motosiklet" data-price="950 TL" data-info="Gri Renk" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
+        <img src="images/yelkengri.jpg" alt="Yelken Gri Motosiklet">
+        <div class="product-details">
+            <h3>Yelken Gri</h3>
+            <div class="price-info-container">
+                <span class="price">₺950</span>
+                <span class="info-tag">Gri Renk</span>
+            </div>
+        </div>
+    </div>
 
-  <div class="product-card" data-name="Yelken Kırmızı" data-category="motosiklet">
-    <img src="images/yelkenkırmızı.jpg" alt="">
-    <h3>Yelken Kırmızı</h3>
-    <button class="details-btn" data-product="Yelken Kırmızı" data-price="980 TL" data-address="Akıncılar, İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor">Detaylar</button>
-  </div>
+    <div class="product-card" data-product="Yelken Kırmızı" data-name="Yelken Kırmızı" data-category="motosiklet" data-price="980 TL" data-info="Kırmızı Renk" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
+        <img src="images/yelkenkırmızı.jpg" alt="Yelken Kırmızı Motosiklet">
+        <div class="product-details">
+            <h3>Yelken Kırmızı</h3>
+            <div class="price-info-container">
+                <span class="price">₺980</span>
+                <span class="info-tag">Kırmızı Renk</span>
+            </div>
+        </div>
+    </div>
 
-  <div class="product-card" data-name="Koyu Yeşil" data-category="yedek">
-    <img src="images/foto5.jpg" alt="">
-    <h3>Koyu Yeşil</h3>
-    <button class="details-btn" data-product="Koyu Yeşil" data-price="980 TL" data-address="Akıncılar, İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor">Detaylar</button>
-  </div>
+    <div class="product-card" data-product="Koruyucu Mont Yeşil" data-name="Koruyucu Mont Yeşil" data-category="aksesuar" data-price="1800 TL" data-info="S-XL Beden" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
+        <img src="images/foto5.jpg" alt="Koruyucu Mont Yeşil">
+        <div class="product-details">
+            <h3>Full Face Kask Koyu-Yeşil </h3>
+            <div class="price-info-container">
+                <span class="price">₺1.800</span>
+                <span class="info-tag">S-XL Beden</span>
+            </div>
+        </div>
+    </div>
 
-  <div class="product-card" data-name="Kask Siyah-Beyaz" data-category="yedek">
-    <img src="images/foto7.jpg" alt="">
-    <h3>Kask Siyah-Beyaz</h3>
-    <button class="details-btn" data-product="Kask Siyah-Beyaz" data-price="980 TL" data-address="Akıncılar, İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor">Detaylar</button>
-  </div>
+    <div class="product-card" data-product="Full Face Kask Siyah-Beyaz" data-name="Full Face Kask Siyah-Beyaz" data-category="aksesuar" data-price="1200 TL" data-info="Hafif, Güvenli, Şık" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
+        <img src="images/foto7.jpg" alt="Kask Siyah-Beyaz">
+        <div class="product-details">
+            <h3>Full Face Kask Siyah-Beyaz</h3>
+            <div class="price-info-container">
+                <span class="price">₺1.200</span>
+                <span class="info-tag">Hafif, Güvenli, Şık</span>
+            </div>
+        </div>
+    </div>
 
-  <div class="product-card" data-name="Kask Kırmızı" data-category="yedek">
-    <img src="images/foto6.jpg" alt="">
-    <h3>Kask Kırmızı</h3>
-    <button class="details-btn" data-product="Kask Kırmızı" data-price="980 TL" data-address="Akıncılar, İzmir" data-phone="+90 530 599 88 91" data-location="https://www.google.com/maps/place/Asil+Motor">Detaylar</button>
-  </div>
-</div> <!-- Burası en son kapanış -->
+    <div class="product-card" data-product="Motosiklet Eldiveni" data-name="Motosiklet Eldiveni" data-category="aksesuar" data-price="600 TL" data-info="Tüm Bedenler" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
+        <img src="images/foto6.jpg" alt="Motosiklet Eldiveni">
+        <div class="product-details">
+            <h3>Full Face Kask Kırmızı</h3>
+            <div class="price-info-container">
+                <span class="price">₺600</span>
+                <span class="info-tag">Tüm Bedenler</span>
+            </div>
+        </div>
+    </div>
+</div> 
 
 
-<!-- Modal -->
 <div id="detailsModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2 id="modalName">Ürün İsmi</h2>
-    <p id="modalPrice">Fiyat: 0 TL</p>
-    <p id="modalAddress">Adres: Örnek Sokak No:1</p>
-    <p id="modalPhone">Telefon:90 530 599 88 91</p>
-    <button id="showLocation">Konumu Gör</button>
-    <a id="whatsappLink" href="#" target="_blank"><button>WhatsApp ile Sor</button></a>
-  </div>
+    <div class="modal-content">
+        <span class="close">×</span>
+        <h2 id="modalName">Ürün İsmi</h2>
+        <p id="modalPrice">Fiyat: 0 TL</p>
+        <p id="modalAddress">Adres: Örnek Sokak No:1</p>
+        <p id="modalPhone">Telefon: 90 530 599 88 91</p>
+        <button id="showLocation">📍Konumu Gör</button>
+        <a id="whatsappLink" href="#" target="_blank"><button>💬WhatsApp ile Sor</button></a>
+    </div>
 </div>
 
-<!-- Mail kutusu -->
-<div class="mail-box" id="mailBox">📧</div>
-<div class="mail-form" id="mailForm">
-  <span class="mail-close" id="mailClose">&times;</span>
-  <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-    <h3>Bizimle İletişime Geç</h3>
-    <input type="hidden" name="access_key" value="0fd46e25-0957-4854-b727-d7539d09c62f">
-    <input type="text" name="name" placeholder="Adınız" required>
-    <input type="email" name="email" placeholder="E-posta" required>
-    <textarea name="message" placeholder="Mesajınız" rows="4" required></textarea>
-    <button type="submit">Gönder</button>
-  </form>
+<div class="mail-box">
+    
+    <form class="mail-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <div class="mail-form-inner">
+            <h3>Bize Ulaşın <span class="mail-close" onclick="toggleForm()">×</span></h3>
+            
+            <input type="hidden" name="access_key" value="0fd46e25-0957-4854-b727-d7539d09c62f">
+            <input type="text" name="name" placeholder="Adınız" required>
+            <input type="email" name="email" placeholder="E-Posta" required>
+            <textarea name="message" placeholder="Mesajınız" required></textarea>
+            <button type="submit">Gönder</button>
+        </div>
+    </form>
+    
+    <button class="mail-toggle" onclick="toggleForm()">
+        📧 Mail Gönder
+    </button>
 </div>
+
+
+<footer>
+    <p>© 2025 Asil Motor. Tüm Hakları Saklıdır.</p>
+</footer>
 
 <script>
-  // Filtre ve arama
-  const categoryFilter = document.getElementById('categoryFilter');
-  const searchInput = document.getElementById('searchInput');
-  const productCards = document.querySelectorAll('.product-card');
+// Filtre ve arama
+const categoryFilter = document.getElementById('categoryFilter');
+const searchInput = document.getElementById('searchInput');
+const productCards = document.querySelectorAll('.product-card');
 
-  categoryFilter.addEventListener('change', filterProducts);
-  searchInput.addEventListener('input', filterProducts);
+categoryFilter.addEventListener('change', filterProducts);
+searchInput.addEventListener('input', filterProducts);
 
-  function filterProducts() {
+function filterProducts() {
     const category = categoryFilter.value.toLowerCase();
     const search = searchInput.value.toLowerCase();
+    
     productCards.forEach(card => {
-      const name = card.dataset.name.toLowerCase();
-      const cardCategory = card.dataset.category.toLowerCase();
-      if ((category === 'all' || category === cardCategory) && name.includes(search)) {
-        card.style.display = 'flex';
-      } else {
-        card.style.display = 'none';
-      }
+        const name = card.dataset.name.toLowerCase();
+        const cardCategory = card.dataset.category.toLowerCase();
+        
+        const matchesCategory = (category === 'all' || category === cardCategory);
+        const matchesSearch = name.includes(search);
+        
+        if (matchesCategory && matchesSearch) {
+            card.style.display = 'flex'; 
+        } else {
+            card.style.display = 'none';
+        }
     });
-  }
+}
 
-  // Modal
-  const modal = document.getElementById('detailsModal');
-  const modalName = document.getElementById('modalName');
-  const modalPrice = document.getElementById('modalPrice');
-  const modalAddress = document.getElementById('modalAddress');
-  const modalPhone = document.getElementById('modalPhone');
-  const showLocationBtn = document.getElementById('showLocation');
-  const whatsappLink = document.getElementById('whatsappLink');
+// Modal
+const modal = document.getElementById('detailsModal');
+const modalName = document.getElementById('modalName');
+const modalPrice = document.getElementById('modalPrice');
+const modalAddress = document.getElementById('modalAddress');
+const modalPhone = document.getElementById('modalPhone');
+const showLocationBtn = document.getElementById('showLocation');
+const whatsappLink = document.getElementById('whatsappLink');
 
-  document.querySelectorAll('.details-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      modalName.textContent = btn.dataset.product;
-      modalPrice.textContent = `Fiyat: ${btn.dataset.price}`;
-      modalAddress.textContent = `Adres: ${btn.dataset.address}`;
-      modalPhone.textContent = `Telefon: ${btn.dataset.phone}`;
-      showLocationBtn.onclick = () => window.open(btn.dataset.location, "_blank");
-      whatsappLink.href = `https://wa.me/905305998891?text=Merhaba, ${btn.dataset.product} hakkında bilgi almak istiyorum.`;
-      modal.style.display = 'block';
+// Tıklama olayını tüm kartlara atadık
+productCards.forEach(card => {
+    card.addEventListener('click', () => {
+        // Data özelliklerini direkt karttan alıyoruz
+        modalName.textContent = card.dataset.product;
+        // Fiyatı modalda da TL simgesiyle göstermek için formatlandı.
+        modalPrice.textContent = `Fiyat: ₺${card.dataset.price.replace(' TL', '').replace(' ', '')}`;
+        modalAddress.textContent = `Adres: ${card.dataset.address}`;
+        
+        // Telefon numarasından sadece rakamları al
+        const whatsappNumber = card.dataset.phone.replace(/\D/g,'');
+        
+        modalPhone.textContent = `Telefon: ${card.dataset.phone}`;
+        showLocationBtn.onclick = () => window.open(card.dataset.location, "_blank");
+        whatsappLink.href = `https://wa.me/${whatsappNumber}?text=Merhaba, ${card.dataset.product} (${card.dataset.price}) hakkında bilgi almak istiyorum.`;
+        modal.style.display = 'flex'; 
     });
-  });
+});
 
-  document.querySelector('.close').addEventListener('click', () => modal.style.display = 'none');
-  window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
+document.querySelector('.close').addEventListener('click', () => modal.style.display = 'none');
+window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
 
-  // Mail kutusu
-  const mailBox = document.getElementById('mailBox');
-  const mailForm = document.getElementById('mailForm');
-  const mailClose = document.getElementById('mailClose');
-  let mailOpen = false;
+// Mail form aç/kapat 
+function toggleForm(){
+    const form = document.querySelector(".mail-form");
+    const toggleButton = document.querySelector(".mail-toggle");
 
-  mailBox.addEventListener('click', () => {
-    mailOpen = !mailOpen;
-    mailForm.style.display = mailOpen ? 'block' : 'none';
-  });
-
-  mailClose.addEventListener('click', () => {
-    mailOpen = false;
-    mailForm.style.display = 'none';
-  });
-
-  const form = document.getElementById('contact-form');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: formData,
-    });
-    if (response.ok) {
-      alert('Mesajınız başarıyla gönderildi!');
-      form.reset();
-      mailForm.style.display = 'none';
-      mailOpen = false;
+    form.classList.toggle("active");
+    
+    // Butonun şeklini ayarla
+    if(form.classList.contains('active')) {
+        toggleButton.style.borderRadius = '10px 10px 0 0';
     } else {
-      alert('Bir hata oluştu, tekrar deneyin.');
+        toggleButton.style.borderRadius = '50px';
     }
-  });
+}
 
-  
+// Web3Forms gönderim sonrası 
+const form=document.getElementById("contactForm");
+form.addEventListener("submit",async function(e){
+    e.preventDefault();
+    const data=new FormData(form);
+    const res=await fetch(form.action,{method:"POST",body:data});
+    
+    const toggleButton = document.querySelector(".mail-toggle");
+
+    if(res.ok){
+        alert("Mesajınız başarıyla gönderildi ✅");
+        form.reset();
+        form.classList.remove("active");
+        toggleButton.style.borderRadius = '50px'; // Kapanınca yuvarlak yap
+    }else{
+        alert("Bir hata oluştu ❌ Lütfen tekrar deneyin.");
+    }
+});
 </script>
 
 </body>
