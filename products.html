@@ -19,7 +19,7 @@ body {
     line-height: 1.6;
 }
 
-/* HEADER - Anasaypa Stiliyle Uyumlu Basit Navigasyon */
+/* HEADER */
 header {
     background: #000;
     color: white;
@@ -36,7 +36,7 @@ header h1 {
 }
 
 header nav a {
-    color: #e50914; /* Ana Sayfa Kırmızı Rengi */
+    color: #e50914;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
@@ -69,7 +69,6 @@ header nav a:hover {
 /* ÜRÜN GRİDİ */
 .product-container {
     display: grid;
-    /* Masaüstünde min 280px genişliğinde kartlar yan yana sıralanır */
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
     gap: 25px; 
     padding: 0 20px 50px 20px;
@@ -82,13 +81,11 @@ header nav a:hover {
     background: white;
     border-radius: 10px; 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
-    display: flex;
-    flex-direction: column;
     height: 400px; 
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer; 
     overflow: hidden; 
-    position: relative;
+    position: relative; /* Önemli */
 }
 
 .product-card:hover {
@@ -98,29 +95,37 @@ header nav a:hover {
 
 .product-card img {
     width: 100%;
-    height: 270px; 
-    border-radius: 10px 10px 0 0; 
+    height: 100%;
     object-fit: contain; 
-    /* DEĞİŞİKLİK BURADA: Resmin boş kalan kısımlarının arka plan rengi */
-    background-color: #f0f0f0; /* Daha açık ve yumuşak gri */
+    background-color: #f0f0f0;
 }
 
-/* Başlık, Fiyat ve Bilgiyi tutan beyaz zemin alanı */
+/* ÜRÜN DETAYLARI (Gizlenip hover’da açılan kısım) */
 .product-details {
     padding: 15px;
-    flex-grow: 1; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background: rgb(84, 84, 84);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.4s ease-in-out;
+}
+
+.product-card:hover .product-details {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .product-details h3 {
     margin: 0;
     font-size: 1.3rem;
-    color: #222;
+    color: #000000;
     font-weight: 600;
+    padding: 1px;
 }
-
 /* Fiyat ve Bilgi Satırı */
 .price-info-container {
     display: flex;
@@ -131,20 +136,20 @@ header nav a:hover {
 
 .price-info-container .price {
     font-size: 1.4rem;
-    color: #e50914; /* Kırmızı renk */
+    color: #e50914;
     font-weight: bold;
 }
 
 .price-info-container .info-tag {
-    background: #777; 
+    background: #000000; 
     color: white;
-    padding: 8px 12px;
+    padding: 5px 8px;
     border-radius: 8px; 
     font-size: 0.9rem;
     font-weight: 600;
 }
 
-/* MODAL STİLLERİ (Tutarlı) */
+/* MODAL */
 .modal {
     display: none;
     position: fixed;
@@ -199,7 +204,7 @@ header nav a:hover {
     background: #b00610;
 }
 
-/* MAİL KUTUSU STİLLERİ */
+/* MAİL KUTUSU */
 .mail-box {
     position: fixed;
     bottom: 20px; 
@@ -210,7 +215,6 @@ header nav a:hover {
     align-items: flex-end;
 }
 
-/* Form açma/kapama butonu */
 .mail-toggle {
     background: #e50914;
     color: #fff;
@@ -226,7 +230,6 @@ header nav a:hover {
     text-align: left;
     width: 180px; 
 }
-
 
 .mail-form.active + .mail-toggle {
     border-radius: 10px 10px 0 0; 
@@ -269,7 +272,6 @@ header nav a:hover {
     position: relative; 
 }
 
-/* KAPATMA DÜĞMESİ */
 .mail-close {
     position: absolute;
     top: 5px;
@@ -305,8 +307,7 @@ header nav a:hover {
     background: #b00610;
 }
 
-
-/* FOOTER STİLİ (ANASAYFA İLE AYNI) */
+/* FOOTER */
 footer {
     background: #000;
     color: #fff;
@@ -320,10 +321,8 @@ footer p {
     margin: 0;
 }
 
-
-/* MOBİL UYUMLULUK AYARLARI (768px altı) */
+/* MOBİL */
 @media (max-width: 768px) {
-    /* Başlık ve Navigasyon */
     header {
         padding: 1rem;
         flex-direction: column;
@@ -332,8 +331,6 @@ footer p {
     header nav {
         margin-top: 10px;
     }
-
-    /* Filtre ve Arama - Alt alta sıralanır */
     .filter-container {
         flex-direction: column;
         align-items: center;
@@ -344,37 +341,29 @@ footer p {
         max-width: 100%;
         width: 100%;
     }
-
-    /* Ürün Kartları - Tek sütuna düşer */
     .product-container {
-        grid-template-columns: 1fr; /* Tek sütun */
-        gap: 15px; /* Boşluk azaltıldı */
-        padding: 0 15px 50px 15px; /* Yan boşluk azaltıldı */
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0 15px 50px 15px;
     }
-
-    /* ÜRÜN KARTLARI YÜKSEKLİĞİ MOBİL İÇİN DÜZELTİLDİ */
     .product-card {
-        height: auto; /* Yüksekliği içeriğe göre ayarla */
+        height: auto;
     }
     .product-card img {
-        height: 250px; /* Mobil için uygun bir resim yüksekliği */
+        height: 250px;
     }
-    
-    /* MAİL KUTUSU (En altta ortalanmış) */
     .mail-box {
         bottom: 10px;
         right: 10px;
-        left: 10px; /* Mobil ortalama için sola da 10px boşluk */
+        left: 10px;
         align-items: center;
     }
-    
     .mail-toggle, .mail-form {
         width: 100%; 
         max-width: 300px;
         right: auto;
         bottom: auto; 
     }
-    
     .mail-form {
         position: absolute;
         transform: translateY(calc(100% + 10px));
@@ -383,12 +372,12 @@ footer p {
     .mail-form.active {
         transform: translateY(calc(-100% - 10px));
     }
-    
     .mail-form.active + .mail-toggle {
         width: 100%;
         max-width: 300px;
     }
 }
+
 </style>
 </head>
 <body>
@@ -416,7 +405,7 @@ footer p {
         <div class="product-details">
             <h3>Benice 150</h3>
             <div class="price-info-container">
-                <span class="price">₺1.000</span>
+                <span class="price">₺119.000</span>
                 <span class="info-tag">Stokta Var</span>
             </div>
         </div>
@@ -438,7 +427,7 @@ footer p {
         <div class="product-details">
             <h3>CG50 Plus</h3>
             <div class="price-info-container">
-                <span class="price">₺1.500</span>
+                <span class="price">₺69.000</span>
                 <span class="info-tag">Plus Model</span>
             </div>
         </div>
@@ -449,7 +438,7 @@ footer p {
         <div class="product-details">
             <h3>Speeedy</h3>
             <div class="price-info-container">
-                <span class="price">₺900</span>
+                <span class="price">₺87.000</span>
                 <span class="info-tag">Yeni Seri</span>
             </div>
         </div>
@@ -460,7 +449,7 @@ footer p {
         <div class="product-details">
             <h3>Yelken Gri</h3>
             <div class="price-info-container">
-                <span class="price">₺950</span>
+                <span class="price">74.000</span>
                 <span class="info-tag">Gri Renk</span>
             </div>
         </div>
@@ -471,7 +460,7 @@ footer p {
         <div class="product-details">
             <h3>Yelken Kırmızı</h3>
             <div class="price-info-container">
-                <span class="price">₺980</span>
+                <span class="price">₺59.000</span>
                 <span class="info-tag">Kırmızı Renk</span>
             </div>
         </div>
@@ -482,7 +471,7 @@ footer p {
         <div class="product-details">
             <h3>Full Face Kask Koyu-Yeşil </h3>
             <div class="price-info-container">
-                <span class="price">₺1.800</span>
+                <span class="price">₺3000</span>
                 <span class="info-tag">S-XL Beden</span>
             </div>
         </div>
@@ -493,7 +482,7 @@ footer p {
         <div class="product-details">
             <h3>Full Face Kask Siyah-Beyaz</h3>
             <div class="price-info-container">
-                <span class="price">₺1.200</span>
+                <span class="price">₺3000</span>
                 <span class="info-tag">Hafif, Güvenli, Şık</span>
             </div>
         </div>
@@ -502,9 +491,9 @@ footer p {
     <div class="product-card" data-product="Motosiklet Eldiveni" data-name="Motosiklet Eldiveni" data-category="aksesuar" data-price="600 TL" data-info="Tüm Bedenler" data-address="Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir" data-phone="905305998891" data-location="https://www.google.com/maps/place/Asil+Motor/@38.390351,27.140857,657m/data=!3m1!1e3!4m6!3m5!1s0x14bbdf007308dbd1:0xcd3679e6794138d3!8m2!3d38.390351!4d27.140857!16s%2Fg%2F11yjpctq_1?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">
         <img src="images/foto6.jpg" alt="Motosiklet Eldiveni">
         <div class="product-details">
-            <h3>Full Face Kask Kırmızı</h3>
+            <h3>Kask Kırmızı</h3>
             <div class="price-info-container">
-                <span class="price">₺600</span>
+                <span class="price">3000</span>
                 <span class="info-tag">Tüm Bedenler</span>
             </div>
         </div>
@@ -517,7 +506,7 @@ footer p {
         <span class="close">×</span>
         <h2 id="modalName">Ürün İsmi</h2>
         <p id="modalPrice">Fiyat: 0 TL</p>
-        <p id="modalAddress">Adres: Örnek Sokak No:1</p>
+        <p id="modalAddress">Adres: Akıncılar, Akdoğan Cd. no:14 A D:B, 35380 Buca/İzmir</p>
         <p id="modalPhone">Telefon: 90 530 599 88 91</p>
         <button id="showLocation">📍Konumu Gör</button>
         <a id="whatsappLink" href="#" target="_blank"><button>💬WhatsApp ile Sor</button></a>
